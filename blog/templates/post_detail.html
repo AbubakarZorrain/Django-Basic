@@ -1,0 +1,31 @@
+{% load i18n %}
+<html>
+  <head>
+    <title>Post Detail</title>
+  </head>
+  <body>
+    <h1>Posts Detail</h1>
+    <ul>
+      <li><a href="/posts/{{post.id}}">{% trans post.title%}</a></li>
+      <li>{{post.author.username}}</li>
+      <li>{{post.content}}</li>
+      <li>{{post.date}}</li>
+      <li>{{post.time}}</li>
+      <li>{{post.image}}</li>
+
+      {%if comments%} Reply to this comment
+      <ul>
+        <li>
+          {% for reply in comments %} {{reply.comment}} {{reply.author}}
+          {{reply.date}} {{reply.time}}
+        </li>
+      </ul>
+      {%endfor%} {%endif%}
+    </ul>
+    <h3>Post a new Comment to this Post</h3>
+    <form action="/blogs/post/{{post.id}}/comments/" method="post">
+      {% csrf_token %} {{commentForm}}
+      <button type="submit">Submit</button>
+    </form>
+  </body>
+</html>
